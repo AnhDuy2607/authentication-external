@@ -21,7 +21,7 @@ export default defineComponent({
   setup () {
     const userInfo = ref<any>();
     const buildCookie = (source) => {
-      const cookie = source.replace(" secure; samesite=lax; httponly", process.env.NODE_ENV === 'development' ? "Domain=localhost" : 'Domain=testauth.dichvubanker.com');
+      const cookie = source.replace(" httponly", process.env.NODE_ENV === 'development' ? "Domain=localhost" : 'Domain=testauth.dichvubanker.com');
 
       return Promise.resolve(cookie)
     }
