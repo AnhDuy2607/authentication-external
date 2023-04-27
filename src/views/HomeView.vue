@@ -31,9 +31,8 @@ export default defineComponent({
       };
       const res = await axios.post('/api/auth/google', payload);
       const newCookie = await buildCookie(res.data[0]);
-      console.log(newCookie);
-      document.cookie = newCookie
-      const user = await axios.get('/api/auth/me', {withCredentials: true});
+      document.cookie = newCookie;
+      const user = await axios.get('/api/auth/me', { withCredentials: true });
       userInfo.value = user.data;
       // console.log(response.credential, res, user)
       // console.log("Handle the userData", userData)
