@@ -24,7 +24,6 @@ export default defineComponent({
       const payload = {
         token: credential
       };
-      console.log(process.env.NODE_ENV)
       const res = await axios.post('/api/auth/google', payload);
       const cookie = res.data[0].replace(" secure; samesite=lax; httponly", process.env.NODE_ENV === 'development' ? "Domain=localhost" : 'Domain=https://testauth.dichvubanker.com');
       document.cookie = cookie
