@@ -20,13 +20,19 @@ export default defineComponent({
   },
   setup () {
     const userInfo = ref<any>();
+    const buildCookie = (source) => {
+      const cookie = source.replace(" secure; samesite=lax; httponly", process.env.NODE_ENV === 'development' ? "Domain=localhost" : 'Domain=testauth.dichvubanker.com');
+
+      return Promise.resolve(cookie)
+    }
     const callback = async ({credential}) => {
       const payload = {
         token: credential
       };
       const res = await axios.post('/api/auth/google', payload);
-      const cookie = res.data[0].replace(" secure; samesite=lax; httponly", process.env.NODE_ENV === 'development' ? "Domain=localhost" : 'Domain=https://testauth.dichvubanker.com');
-      document.cookie = cookie
+      const newCookie = await buildCookie(res.data[0]);
+      console.log(newCookie);
+      document.cookie = newCookie
       const user = await axios.get('/api/auth/me', {withCredentials: true});
       userInfo.value = user.data;
       // console.log(response.credential, res, user)
